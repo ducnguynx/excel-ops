@@ -460,21 +460,27 @@ def extract_intersection_data(source_folder, master_filepath, master_wb=None):
 
 
 if __name__ == "__main__":
-    SOURCE_DIRS = [
-        "./Dot 7",
-        "./Dot 8",
-        "./Dot 9",
-        "./Dot 10",
-        "./Dot 11",
-        "./Dot 12",
-    ]
-    MASTER_FILE = "./Danh mục SA 08 - NOVATION.xlsx"
-    TEST_MASTER_FILE = "./Danh mục SA 08 - NOVATION - test.xlsx"
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    SOURCE_DIRS = sorted(
+        [
+            os.path.join(BASE_DIR, name)
+            for name in os.listdir(BASE_DIR)
+            if os.path.isdir(os.path.join(BASE_DIR, name))
+            and not name.startswith((".", "_"))
+        ],
+        key=lambda path: (
+            int(m.group())
+            if (m := re.search(r"\d+", os.path.basename(path)))
+            else float("inf"),
+            os.path.basename(path).lower(),
+        ),
+    )
+    MASTER_FILE = os.path.join(BASE_DIR, "Danh mục SA 08 - NOVATION.xlsx")
+    TEST_MASTER_FILE = os.path.join(BASE_DIR, "Danh mục SA 08 - NOVATION - test.xlsx")
 
     shutil.copy2(MASTER_FILE, TEST_MASTER_FILE)
     master_workbook = openpyxl.load_workbook(TEST_MASTER_FILE)
     for source_dir in SOURCE_DIRS:
-        if os.path.isdir(source_dir):
-            extract_intersection_data(source_dir, TEST_MASTER_FILE, master_workbook)
+        extract_intersection_data(source_dir, TEST_MASTER_FILE, master_workbook)
     master_workbook.save(TEST_MASTER_FILE)
     print(f"\nSuccess! Data compiled into {TEST_MASTER_FILE}")

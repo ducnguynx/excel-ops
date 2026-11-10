@@ -41,6 +41,6 @@ pip install openpyxl xlrd thefuzz
 python3 main.py
 ```
 
-- Script sẽ tạo bản sao từ file gốc `Danh mục SA 08 - NOVATION.xlsx` sang `Danh mục SA 08 - NOVATION - test.xlsx` và ghi dữ liệu tổng hợp vào `Sheet1`.
+- Script sẽ tự động quét tất cả các thư mục đợt thanh toán nằm cùng cấp với `main.py` (sắp xếp theo số thứ tự đợt), tạo bản sao từ file gốc `Danh mục SA 08 - NOVATION.xlsx` sang `Danh mục SA 08 - NOVATION - test.xlsx` và ghi dữ liệu tổng hợp vào `Sheet1`.
 - Những dòng/ô có cấu trúc bất thường hoặc lệch số liệu đối chiếu sẽ được đánh dấu `"check"`.
-- Để thay đổi các đợt cần chạy hoặc tên file Master, chỉnh sửa các biến `SOURCE_DIRS`, `MASTER_FILE`, `TEST_MASTER_FILE` ở cuối file `main.py`.
+- Để thay đổi tên file Master đầu vào/đầu ra, chỉnh sửa biến `MASTER_FILE`, `TEST_MASTER_FILE` ở cuối file `main.py`.
